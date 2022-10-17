@@ -7,6 +7,7 @@ const db = require('./db');
 const PORT = process.env.PORT || 8080;
 
 const applicationsRouter = require('./routes/applications');
+const usersRouter = require('./routes/users');
 
 app.use(cors());
 app.use(express.json());
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/applications', applicationsRouter);
+app.use('/users', usersRouter);
 
 
 
