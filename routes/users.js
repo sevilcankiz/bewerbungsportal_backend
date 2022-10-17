@@ -17,7 +17,7 @@ const usersRouter = express.Router();
 usersRouter.route('/').get(getAllUsers).post(createUser);
 usersRouter.route('/:id').get(getSingleUser).put(updateUser).delete(deleteUser);
 // Users-Address
-usersRouter.route('/:id/address').get(getAddress).post(createAddress).put(updateAddress);
+usersRouter.route('/:id/:type').get(getAddress).post(createAddress).put(updateAddress);
 // Users-Resumes
 // usersRouter.route('/:id/resumes').get(getAllResumes).post(createResume);
 // usersRouter.route('/:id/resumes/:id').get(getSingleResumes).put(updateResume).delete(deleteResume);

@@ -93,8 +93,9 @@ const deleteUser = async(req, res) => {
 //################## User-Address ###################################
 const getAddress = async(req, res)=>{
     try {
-        const user = getSingleUser(req, res);
-        const address = await user.Address.find();
+        const {id, type} = req.params;
+        const user = await User.findById(id);
+        const address = user[type];
         res.status(200).json(address);
     } catch (error) {
         res.status(500).send(error.message); 
