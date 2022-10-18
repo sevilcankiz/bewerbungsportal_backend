@@ -116,7 +116,6 @@ const updateAddress = async(req, res)=>{
             city,
             email} = req.body;
         if (type !== 'address') return res.send('Keine addresse angegeben'); 
-
         const newAddress = { 
             postCode,
             street,
