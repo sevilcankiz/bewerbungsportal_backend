@@ -9,18 +9,22 @@ const Address = new Schema({
     phone: [ String ]
 });
 
+const Certificate = new Schema({
+    certName: String,
+    certURL: String
+});
+
+const Resume = new Schema({
+    resName: String,
+    resURL: String
+});
+
 const User = new Schema({
     firstName: String,
     lastName: String,
     address: Address,  
-    certificates: [{
-        name: String,
-        url: String
-    }],
-    resumes: [{
-        name: String,
-        url: String
-    }],
+    certificates: [Certificate],
+    resumes: [Resume],
 });
 
 

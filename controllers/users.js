@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const Address = require('../models/Address');
 
 
 
@@ -25,24 +24,32 @@ const getSingleUser = async(req, res) => {
 
 const createUser = async(req, res) => {
     try {
-        const { firstName, 
+        const { 
+                firstName, 
                 lastName, 
                 address:{
                     postCode,
                     street,
                     city,
-                    email
-                } 
+                    email,
+                    phone
+                },
+                certificates,
+                resumes 
         } = req.body;
         const newUser = await User.create(
-            { firstName, 
+            { 
+                firstName, 
                 lastName, 
                 address:{
                     postCode,
                     street,
                     city,
-                    email
-                } 
+                    email,
+                    phone: phone[0]
+                },
+                certificates: [{certificates}],
+                resumes: [{resumes}]
             }
         );
         res.status(201).json(newUser);
@@ -85,7 +92,7 @@ const deleteUser = async(req, res) => {
     try { 
         const { id } = req.params; 
         const user = await User.findByIdAndDelete(id);
-        res.status(200).send(`${user.firstName} ${user.lastName} wurde gleöscht.`);
+        res.status(200).send(`${user.firstName} ${user.lastName} wurde gelöscht.`);
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -116,7 +123,6 @@ const updateAddress = async(req, res)=>{
             city,
             email} = req.body;
         if (type !== 'address') return res.send('Keine addresse angegeben'); 
-
         const newAddress = { 
             postCode,
             street,
@@ -132,13 +138,6 @@ const updateAddress = async(req, res)=>{
     }
 };
 
-// const updateAddress = async(req, res)=>{
-//     try {
-        
-//     } catch (error) {
-//         res.status(500).send(error.message); 
-//     }
-// };
 
 module.exports={
                 getAllUsers, 

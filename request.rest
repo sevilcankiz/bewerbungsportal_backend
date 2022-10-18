@@ -1,11 +1,59 @@
 GET http://localhost:8080/users
 
 ###!SECTION
+GET http://localhost:8080/users/634d3df2180ede6601d18f99
+
+###!SECTION
 
 POST http://localhost:8080/users
+content-Type: application/json
+
+{
+    "firstName": "Mia",
+    "lastName": "Müller",
+    "address": {
+        "postCode": "55564",
+        "street": "CloudsevenStr. 7",
+        "city": "Wolkenkuckucksheim",
+        "email": "m.mueller@gmail.com",
+        "phone": ["+49 0123 456 789"]
+    },
+    "certificates": [{
+        "name": "JavaScript",
+        "url": "../certificates/javaScript.pdf"
+    }],
+    "resumes": [{
+        "name": "Lebenslauf Web-Entwickler",
+        "url": "../resumes/lebenslauf1.pdf"
+    }]
+  
+}
+
+###!SECTION
+
+###!SECTION
+PUT http://localhost:8080/users/
 Content-Type: application/json 
 {
     "firstName": "",
     "lastName": "",
-    
+    "address": {
+        "postCode": "",
+        "street": "",
+        "city": "",
+        "email": "",
+        "phone": [],
+    },
+    "certificates": [{
+        "name": "",
+        "url": ""
+    }],
+    "resumes": [{
+        "name": "",
+        "url": ""
+    }],
+  
 }
+
+###!SECTION
+DELETE http://localhost:8080/users/634ea146a5a3cd84886f5308
