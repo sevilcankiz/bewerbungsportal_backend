@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Address = require('../models/Address');
 
 
 
@@ -94,6 +95,8 @@ const deleteUser = async(req, res) => {
 const getAddress = async(req, res)=>{
     try {
         const {id, type} = req.params;
+        if (type !== 'address') return res.send('Keine addresse angegeben'); 
+
         const user = await User.findById(id);
         const address = user[type];
         res.status(200).json(address);
@@ -102,21 +105,40 @@ const getAddress = async(req, res)=>{
     }
 };
 
-const createAddress = async(req, res)=>{
+const updateAddress = async(req, res)=>{
     try {
+        const {id, type} = req.params;
+        // const userId = ObjektID(id.toString());
+        // console.log(userId);
+        const { 
+            postCode,
+            street,
+            city,
+            email} = req.body;
+        if (type !== 'address') return res.send('Keine addresse angegeben'); 
+        const newAddress = { 
+            postCode,
+            street,
+            city,
+            email};    
+        const updatedUser = await User.findByIdAndUpdate(id, {   
+            address: newAddress
+        });
         
+        res.status(201).json(newAddress);
+        await addresses.deleteOne(newAddress);
     } catch (error) {
         res.status(500).send(error.message); 
     }
 };
 
-const updateAddress = async(req, res)=>{
-    try {
+// const updateAddress = async(req, res)=>{
+//     try {
         
-    } catch (error) {
-        res.status(500).send(error.message); 
-    }
-};
+//     } catch (error) {
+//         res.status(500).send(error.message); 
+//     }
+// };
 
 module.exports={
                 getAllUsers, 
@@ -125,6 +147,5 @@ module.exports={
                 updateUser,
                 deleteUser,
                 getAddress,
-                createAddress,
                 updateAddress
                 };
