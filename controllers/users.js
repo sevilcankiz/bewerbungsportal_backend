@@ -116,6 +116,7 @@ const updateAddress = async(req, res)=>{
             city,
             email} = req.body;
         if (type !== 'address') return res.send('Keine addresse angegeben'); 
+
         const newAddress = { 
             postCode,
             street,
@@ -126,7 +127,6 @@ const updateAddress = async(req, res)=>{
         });
         
         res.status(201).json(newAddress);
-        await addresses.deleteOne(newAddress);
     } catch (error) {
         res.status(500).send(error.message); 
     }
