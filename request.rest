@@ -3,7 +3,7 @@ GET http://localhost:8080/users
 ###!SECTION
 
 
-GET http://localhost:8080/users/63500d9d5d3b2644cafed4fa
+GET http://localhost:8080/users/634f2bdebda1dc6050780bfb
 
 
 ###!SECTION
@@ -49,15 +49,65 @@ content-Type: application/json
         "phone": "+49 555 555 555"
     },
     "certificates": [{
-        "certName": "PHP-Zeugnis",
-        "certURL": "../certificates/javaScript.pdf"
+        "name": "PHP-Zeugnis",
+        "URL": "../certificates/javaScript.pdf"
     }],
     "resumes": [{
-        "resName": "Lebenslauf 5 Web-Entwickler",
-        "resURL": "../resumes/lebenslauf1.pdf"
+        "name": "Lebenslauf 5 Web-Entwickler",
+        "URL": "../resumes/lebenslauf1.pdf"
     }]
   
 }
 
 ###!SECTION
+
 DELETE http://localhost:8080/users/635017c86ef1c4e02a92f367
+
+
+###!SECTION CREATE USER-Documents
+
+POST http://localhost:8080/users/634f2bdebda1dc6050780bfb/certificates
+content-Type: application/json
+
+{
+    "certName": "Java-Zertifikat",
+    "certURL": "../certificates/java.pdf"
+}
+
+###!SECTION
+
+POST http://localhost:8080/users/634f2bdebda1dc6050780bfb/resumes
+content-Type: application/json
+
+{
+    "resName": "Lebenslauf 10 Frontend-Entwickler",
+    "resURL": "../resumes/lebenslauf10.pdf"
+}
+
+###!SECTION
+
+GET http://localhost:8080/users/634f2bdebda1dc6050780bfb/certificates
+
+###!SECTION
+GET http://localhost:8080/users/634f2bdebda1dc6050780bfb/resumes
+
+###!SECTION
+
+GET http://localhost:8080/users/634f2bdebda1dc6050780bfb/certificates/6350377380117605673ac6c7
+
+###!SECTION
+
+DELETE http://localhost:8080/users/634f2bdebda1dc6050780bfb/certificates/6350371088470682f40d6b1d
+
+###!SECTION
+
+DELETE http://localhost:8080/users/634f2bdebda1dc6050780bfb/resumes/634f2bdebda1dc6050780bfd
+
+###!SECTION
+PUT http://localhost:8080/users/634f2bdebda1dc6050780bfb/certificates/6350377380117605673ac6c7
+content-Type: application/json
+
+{
+    "certName": "JavaScript-Zertifikat",
+    "certURL": "../certificates/javascript.pdf"
+}
