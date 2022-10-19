@@ -76,12 +76,21 @@ content-Type: application/json
 
 ###!SECTION
 
-POST http://localhost:8080/users/634f2bdebda1dc6050780bfb/resumes
+POST http://localhost:8080/users/634f2e74eb1d278628784f63/resumes
 content-Type: application/json
 
 {
-    "resName": "Lebenslauf 10 Frontend-Entwickler",
-    "resURL": "../resumes/lebenslauf10.pdf"
+    "resName": "Lebenslauf 1 Junior Web-Entwickler",
+    "resURL": "../resumes/lebenslauf1.pdf"
+}
+
+###!SECTION
+POST http://localhost:8080/users/634f2e74eb1d278628784f63/certificates
+content-Type: application/json
+
+{
+    "certName": "PHP-Zeugnis",
+    "certURL": "../certificates/php.pdf"
 }
 
 ###!SECTION
@@ -97,11 +106,11 @@ GET http://localhost:8080/users/634f2bdebda1dc6050780bfb/certificates/6350377380
 
 ###!SECTION
 
-DELETE http://localhost:8080/users/634f2bdebda1dc6050780bfb/certificates/6350371088470682f40d6b1d
+DELETE http://localhost:8080/users/634f2e74eb1d278628784f63/certificates/634f2e74eb1d278628784f64
 
 ###!SECTION
 
-DELETE http://localhost:8080/users/634f2bdebda1dc6050780bfb/resumes/634f2bdebda1dc6050780bfd
+DELETE http://localhost:8080/users/634f2e74eb1d278628784f63/resumes/634f2e74eb1d278628784f65
 
 ###!SECTION
 PUT http://localhost:8080/users/634f2bdebda1dc6050780bfb/certificates/6350377380117605673ac6c7
