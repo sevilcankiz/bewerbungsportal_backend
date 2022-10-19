@@ -7,8 +7,10 @@ const {
     updateUser, 
     deleteUser,
     getAddress,
-    createAddress,
-    updateAddress
+    // createAddress,
+    updateAddress,
+    getAllCertificates,
+    createCertificate
     } = require('../controllers/users');
 
 const usersRouter = express.Router();
@@ -22,7 +24,7 @@ usersRouter.route('/:id/:type').get(getAddress).put(updateAddress);
 // usersRouter.route('/:id/resumes').get(getAllResumes).post(createResume);
 // usersRouter.route('/:id/resumes/:id').get(getSingleResumes).put(updateResume).delete(deleteResume);
 // // Users-Certificates
-// usersRouter.route('/:id/certificates').get(getAllCertificates).post(createCertificate);
+usersRouter.route('/:id/:certificates').get(getAllCertificates).post(createCertificate);
 // usersRouter.route('/:id/certificates/:id').get(getSingleCertificate).put(updateCertificate).delete(deleteCertificate);
 
 

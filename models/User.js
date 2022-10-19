@@ -1,31 +1,24 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const Address = new Schema({
-    postCode: String,
-    street: String,
-    city: String,
-    email: String,
-    phone: [ String ]
-});
-
-const Certificate = new Schema({
-    certName: String,
-    certURL: String
-});
-
-const Resume = new Schema({
-    resName: String,
-    resURL: String
-});
-
-const User = new Schema({
+const userSchema = new Schema({
     firstName: String,
     lastName: String,
-    address: Address,  
-    certificates: [Certificate],
-    resumes: [Resume],
+    address: {
+        postCode: String,
+        street: String,
+        city: String,
+        email: String,
+        phone: [ String ]
+    },  
+    certificates: [{
+        certName: String,
+        certURL: String
+    }],
+    resumes: [{
+        resName: String,
+        resURL: String
+    }],
 });
 
-
-module.exports = mongoose.model('users', User);
+module.exports = mongoose.model('User', userSchema);

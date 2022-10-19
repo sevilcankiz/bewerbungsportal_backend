@@ -34,8 +34,14 @@ const createUser = async(req, res) => {
                     email,
                     phone
                 },
-                certificates,
-                resumes 
+                certificates: [{
+                    certName,
+                    certURL
+                }],
+                resumes: [{ 
+                    resName,
+                    resURL
+                }] 
         } = req.body;
         const newUser = await User.create(
             { 
@@ -48,8 +54,8 @@ const createUser = async(req, res) => {
                     email,
                     phone: phone[0]
                 },
-                certificates: [{certificates}],
-                resumes: [{resumes}]
+                certificates: [{certName, certURL}],
+                resumes: [{resName, resURL}]
             }
         );
         res.status(201).json(newUser);
@@ -61,25 +67,39 @@ const createUser = async(req, res) => {
 const updateUser = async(req, res) => {
     try { 
         const { id } = req.params;
-        const { firstName, 
+        const { 
+            firstName, 
             lastName, 
             address:{
                 postCode,
                 street,
                 city,
-                email
-            } 
+                email,
+                phone
+            },
+            certificates: [{
+                certName,
+                certURL
+            }],
+            resumes: [{ 
+                resName,
+                resURL
+            }] 
     } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
         id,
-        {   firstName, 
+        { 
+            firstName, 
             lastName, 
             address:{
                 postCode,
                 street,
                 city,
-                email
-            } 
+                email,
+                phone: phone[0]
+            },
+            certificates: [{certName, certURL}],
+            resumes: [{resName, resURL}]
         }
     );
     res.status(200).json(updatedUser);
@@ -138,6 +158,49 @@ const updateAddress = async(req, res)=>{
     }
 };
 
+// #################### USER-CERTIFICATES########################################
+const getAllCertificates = async(req, res)=>{
+    try {
+        const {id, certificate} = req.params;
+        if (certificate !== 'certificates') return res.send('Keine Zertifikat angegeben.'); 
+
+        const user = await User.findById(id);
+        const certificates = user[certificate];
+        res.status(200).json(certificates.map(item => item));
+    } catch (error) {
+        res.status(500).send(error.message); 
+    }
+};
+
+// const updateCertificate = async(req, res)=>{
+//     try {
+//         const {id, type} = req.params;
+//         // const userId = ObjektID(id.toString());
+//         // console.log(userId);
+//         const { 
+//             postCode,
+//             street,
+//             city,
+//             email} = req.body;
+//         if (type !== 'certificates') return res.send('Keine Zertificate angegeben'); 
+//         const newAddress = { 
+//             postCode,
+//             street,
+//             city,
+//             email};    
+//         const updatedUser = await User.findByIdAndUpdate(id, {   
+//             address: newAddress
+//         });
+        
+//         res.status(201).json(newAddress);
+//     } catch (error) {
+//         res.status(500).send(error.message); 
+//     }
+// };
+
+const createCertificate = async (req, res)=>{
+
+};
 
 module.exports={
                 getAllUsers, 
@@ -146,5 +209,7 @@ module.exports={
                 updateUser,
                 deleteUser,
                 getAddress,
-                updateAddress
+                updateAddress,
+                getAllCertificates,
+                createCertificate
                 };
