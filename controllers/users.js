@@ -1,7 +1,7 @@
 const User = require('../models/User');
 
 
-
+// Alle User ausgeben /users GET
 const getAllUsers = async(req, res) => {
     try {
         const users = await User.find();
@@ -11,6 +11,7 @@ const getAllUsers = async(req, res) => {
     }
 };
 
+// einen User ausgeben /users/:id GET
 const getSingleUser = async(req, res) => {
     try { 
         const { id } = req.params; 
@@ -22,6 +23,7 @@ const getSingleUser = async(req, res) => {
     }
 };
 
+// einen User erstellen /users POST
 const createUser = async(req, res) => {
     try {
         const { 
@@ -64,7 +66,8 @@ const createUser = async(req, res) => {
     }
 };
 
-const updateUser = async(req, res) => {
+// einen User komplett updaten /users/:id PUT
+const updateUser = async(req, res) => {               
     try { 
         const { id } = req.params;
         const { 
@@ -96,18 +99,20 @@ const updateUser = async(req, res) => {
                 street,
                 city,
                 email,
-                phone: phone[0]
+                phone: [phone]
             },
             certificates: [{certName, certURL}],
             resumes: [{resName, resURL}]
         }
     );
-    res.status(200).json(updatedUser);
+    const refreshedUser = await User.findById(id);
+    res.status(200).json(refreshedUser);
     } catch (error) {
         res.status(500).send(error.message);
     }
 };
 
+//einen User löschen /users/:id DELETE
 const deleteUser = async(req, res) => {
     try { 
         const { id } = req.params; 
@@ -118,89 +123,7 @@ const deleteUser = async(req, res) => {
     }
 };
 
-//################## User-Address ###################################
-const getAddress = async(req, res)=>{
-    try {
-        const {id, type} = req.params;
-        if (type !== 'address') return res.send('Keine addresse angegeben'); 
 
-        const user = await User.findById(id);
-        const address = user[type];
-        res.status(200).json(address);
-    } catch (error) {
-        res.status(500).send(error.message); 
-    }
-};
-
-const updateAddress = async(req, res)=>{
-    try {
-        const {id, type} = req.params;
-        // const userId = ObjektID(id.toString());
-        // console.log(userId);
-        const { 
-            postCode,
-            street,
-            city,
-            email} = req.body;
-        if (type !== 'address') return res.send('Keine addresse angegeben'); 
-        const newAddress = { 
-            postCode,
-            street,
-            city,
-            email};    
-        const updatedUser = await User.findByIdAndUpdate(id, {   
-            address: newAddress
-        });
-        
-        res.status(201).json(newAddress);
-    } catch (error) {
-        res.status(500).send(error.message); 
-    }
-};
-
-// #################### USER-CERTIFICATES########################################
-const getAllCertificates = async(req, res)=>{
-    try {
-        const {id, certificate} = req.params;
-        if (certificate !== 'certificates') return res.send('Keine Zertifikat angegeben.'); 
-
-        const user = await User.findById(id);
-        const certificates = user[certificate];
-        res.status(200).json(certificates.map(item => item));
-    } catch (error) {
-        res.status(500).send(error.message); 
-    }
-};
-
-// const updateCertificate = async(req, res)=>{
-//     try {
-//         const {id, type} = req.params;
-//         // const userId = ObjektID(id.toString());
-//         // console.log(userId);
-//         const { 
-//             postCode,
-//             street,
-//             city,
-//             email} = req.body;
-//         if (type !== 'certificates') return res.send('Keine Zertificate angegeben'); 
-//         const newAddress = { 
-//             postCode,
-//             street,
-//             city,
-//             email};    
-//         const updatedUser = await User.findByIdAndUpdate(id, {   
-//             address: newAddress
-//         });
-        
-//         res.status(201).json(newAddress);
-//     } catch (error) {
-//         res.status(500).send(error.message); 
-//     }
-// };
-
-const createCertificate = async (req, res)=>{
-
-};
 
 module.exports={
                 getAllUsers, 
@@ -208,8 +131,4 @@ module.exports={
                 createUser,
                 updateUser,
                 deleteUser,
-                getAddress,
-                updateAddress,
-                getAllCertificates,
-                createCertificate
-                };
+            };

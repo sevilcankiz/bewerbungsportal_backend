@@ -1,7 +1,10 @@
 GET http://localhost:8080/users
 
 ###!SECTION
-GET http://localhost:8080/users/634d370118d69e82244c6e73/address
+
+
+GET http://localhost:8080/users/63500d9d5d3b2644cafed4fa
+
 
 ###!SECTION
 
@@ -9,14 +12,14 @@ POST http://localhost:8080/users
 content-Type: application/json
 
 {
-    "firstName": "Mia",
-    "lastName": "Müller",
+    "firstName": "Hansi",
+    "lastName": "Mayer",
     "address": {
         "postCode": "55564",
-        "street": "CloudsevenStr. 7",
+        "street": "Cloudeleven Str. 11",
         "city": "Wolkenkuckucksheim",
         "email": "m.mueller@gmail.com",
-        "phone": ["+49 0123 456 789"]
+        "phone": ["+49 555 555 555"]
     },
     "certificates": [{
         "certName": "JavaScript",
@@ -32,22 +35,29 @@ content-Type: application/json
 ###!SECTION
 
 ###!SECTION
-PUT http://localhost:8080/users/634f2bdebda1dc6050780bfb
+PUT http://localhost:8080/users/635017c86ef1c4e02a92f367
 content-Type: application/json
 
 {
+    "firstName": "Hansi",
+    "lastName": "Mayer",
+    "address": {
+        "postCode": "55564",
+        "street": "Cloudeleven Str. 11",
+        "city": "Oberammergau",
+        "email": "m.mueller@gmail.com",
+        "phone": "+49 555 555 555"
+    },
     "certificates": [{
-        "certName": "PHP-Grundlagen",
-        "certURL": "../certificates/php-basics.pdf"
+        "certName": "PHP-Zeugnis",
+        "certURL": "../certificates/javaScript.pdf"
     }],
     "resumes": [{
-        "resName": "Lebenslauf Frontend-Entwickler",
-        "resURL": "../resumes/Lebenslauf5.pdf"
-    }], 
+        "resName": "Lebenslauf 5 Web-Entwickler",
+        "resURL": "../resumes/lebenslauf1.pdf"
+    }]
+  
 }
 
 ###!SECTION
-DELETE http://localhost:8080/users/634f2aca560b64d385cbba8b
-
-###!SECTION
-GET http://localhost:8080/users/634f2ee1eb1d278628784f72/certificates
+DELETE http://localhost:8080/users/635017c86ef1c4e02a92f367
