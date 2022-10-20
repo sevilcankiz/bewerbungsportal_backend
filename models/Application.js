@@ -3,13 +3,11 @@ const { Schema } = mongoose;
 
 const Application = new Schema({
         userID: Object,
-        jobTitle: String,
-        
+        jobTitle: String,       
         company: {
                 companyName: String,
                 contactPerson: { 
-                        firstName: String,
-                        lastName: String,
+                        fullName: String,
                         gender: String
                 },
                 address: {
@@ -17,25 +15,17 @@ const Application = new Schema({
                         street: String,
                         city: String,
                         email: String,
-                        phone: [ String ]
+                        phone: String,
+                        website: String
                 }
         },
-        resume: {
-                name: String,
-                url: String
-        },
         motivation: {
-                name: String,
-                url: String
+                motName: String,
+                motURL: String
         },
-        certificates: [
-                {
-                name: String,
-                url: String
-        }],
-        
-        date: Date
-        
+        resumeID: Object,
+        certificates: [ {certID: Object} ],
+        date: {type: Date, default: Date.now}       
 });
 
 module.exports = mongoose.model('applications', Application);
