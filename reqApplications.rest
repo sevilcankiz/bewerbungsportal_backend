@@ -2,39 +2,45 @@ GET http://localhost:8080/applications
 
 ###!SECTION
 
-GET http://localhost:8080/applications/63511dcaf6d97cf522c1df0e
+GET http://localhost:8080/applications/635120d4e6adc00843c98db0
 
 ###!SECTION
 
-POST http://localhost:8080/applications
-content-Type: application/json
+POST http://localhost:8080/applications content-Type: application/json
 
     {
+
         "userID": "634f2bdebda1dc6050780bfb",
-        "jobTitle": "Junior Developer",       
+        "jobName": "Full stack developer (javascript)",
         "company": {
-                "companyName": "Apple",
-                "contactPerson": { 
-                        "fullName": "John Doe",
-                        "gender": "m"
-                },
-                "address": {
-                        "postCode": "10001",
-                        "street": "Main Street",
-                        "city": "New York",
-                        "email": "google@gmail.com",
-                        "phone": "123456789",
-                        "website": "www.google.com"
-                }
+
+            "companyName": "Google", "contactPerson": {
+
+                "fullName": "Jimmy Hendrix", 
+                "gender": "m"
+
+            }, "address": {
+
+                "postCode": "10001",
+                "street": "Main Street",
+                "city": "New York",
+                "email": "google@gmail.com",
+                "phone": "123456789",
+                "website": "www.google.com"
+
+            }
+
         },
-        "motivation": {
-                "motName": "Apple Motivation",
+            "motivation": {
+                "motName": "Googel Motivation",
                 "motURL": "../motivations/google_motivation.pdf"
+
         },
-        "resumeID": "635037ec80117605673ac6cf",
-        "certificates": [ {"certID": "6350377380117605673ac6c7"} ]       
-} 
+            "resumeID": "635037ec80117605673ac6cf",
+            "certificates": [ {"certID": "6350377380117605673ac6c7"} ]
+
+}
 
 ###!SECTION
 
-DELETE http://localhost:8080/applications/63511dcaf6d97cf522c1df0e
+DELETE http://localhost:8080/applications/:id
