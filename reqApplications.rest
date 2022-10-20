@@ -1,0 +1,39 @@
+GET http://localhost:8080/applications
+
+###!SECTION
+
+GET http://localhost:8080/applications/:id
+
+###!SECTION
+
+POST http://localhost:8080/applications
+content-Type: application/json
+
+    {
+        "userID": "634f2bdebda1dc6050780bfb",       
+        "company": {
+                "companyName": "Google",
+                "contactPerson": { 
+                        "fullName": "John Doe",
+                        "gender": "m"
+                },
+                "address": {
+                        "postCode": "10001",
+                        "street": "Main Street",
+                        "city": "New York",
+                        "email": "google@gmail.com",
+                        "phone": "123456789",
+                        "website": "www.google.com"
+                }
+        },
+        "motivation": {
+                "motName": "Googel Motivation",
+                "motURL": "../motivations/google_motivation.pdf"
+        },
+        "resumeID": "635037ec80117605673ac6cf",
+        "certificates": [ {"certID": "6350377380117605673ac6c7"} ]       
+} 
+
+###!SECTION
+
+DELETE http://localhost:8080/applications/:id
