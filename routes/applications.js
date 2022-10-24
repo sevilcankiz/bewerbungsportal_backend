@@ -5,7 +5,7 @@ const {
     getAllApplications,
     getSingleApplication,
     createApplication, 
-    deleteApplication,
+    deleteApplication
 } = require('../controllers/applications');
 
 const applicationsRouter = express.Router();
