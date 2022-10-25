@@ -2,10 +2,7 @@ const express = require('express');
 const jobsRouter = express.Router();
 
 const axios = require('axios');
-//const jwt = require('jsonwebtoken');
 
-const url = 'https://rest.arbeitsagentur.de/oauth/gettoken_cc';
-const url1 = 'https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v4/jobs';
 let token = '';
 
 const creds = {
@@ -17,7 +14,7 @@ const creds = {
 const generateToken = async (req, res, next) => {
   try {  
     console.log("Generating token......");
-    const {data: {access_token}} = await axios.post(url, creds, {
+    const {data: {access_token}} = await axios.post(process.env.URL_GET_TOKEN, creds, {
       headers: {
         'User-Agent': 'Jobsuche/2.9.2 (de.arbeitsagentur.jobboerse; build:1077; iOS 15.1.0) Alamofire/5.4.4',
         'Host': 'rest.arbeitsagentur.de',
@@ -34,20 +31,19 @@ const generateToken = async (req, res, next) => {
 
 jobsRouter.use(generateToken);
 
+  // Beispiel parameter:
+  // '.../pc/v4/jobs?angebotsart=1&wo=Berlin&umkreis=200&arbeitszeit=ho;mj&page=1&size=25&pav=false')
+  // 
 jobsRouter.get('/', async (req, res) => {
   try { 
-    const {params: {what, where}} = req;
-    const { data } = await axios.get(url1, {
+    if(req.query.zeitarbeit === undefined) {
+      req.query.zeitarbeit = 'false';
+    }
+    //console.log("Req: ",req.query);
+    
+    const { data } = await axios.get(process.env.URL_SEARCH_JOBS, {
       headers: {'OAuthAccessToken': token}, 
-      params: { 
-        'angebotsart': '1',
-        'page': '1',
-        'pav': 'false',
-        'size': '100',
-        'umkreis': '50',
-        'was': what,
-        'wo': where
-      }
+      params: { ...req.query}
     });
 
     res.status(200).json(data.stellenangebote);
@@ -55,5 +51,6 @@ jobsRouter.get('/', async (req, res) => {
     res.status(500).json({error: error.message});
   }
 });
+
 
 module.exports = jobsRouter;
