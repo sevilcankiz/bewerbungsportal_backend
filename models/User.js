@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
     firstName: String,
     lastName: String,
+    password: { type: String, required: [true, 'Password is required'], select: false },
     address: {
         postCode: String,
         street: String,
