@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 
@@ -23,12 +25,50 @@ const getSingleUser = async(req, res) => {
     }
 };
 
+// einen eingeloggten User ausgeben /users/me GET
+const getSingleUserByToken = async(req, res) => {
+    try { 
+        const id = req.userId; 
+        console.log(id);
+        const user = await User.findById(id);
+
+        res.status(200).json(user);
+        return user;
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+
+
+// einen eingeloggten User ausgeben /users/me GET
+const getSingleUserByEmail = async(req, res) => {
+    try { 
+        const {address: {email}, password } = req.body
+        //  console.log("email", email);
+          
+          const found = await User.findOne( { "address.email": email } ).select('+password');
+
+          console.log("found", found);
+          if (!found) res.status(404).send("User not found");
+          const match = await bcrypt.compare(password, found.password);
+          if (!match) res.status(400).send("Password incorrect");
+         
+          console.log("found._id", found._id);
+            const token = jwt.sign({ _id: found._id }, process.env.JWT_SECRET);
+            res.status(201).json({ token });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+
 // einen User erstellen /users POST
 const createUser = async(req, res) => {
+    console.log("Req Body", req.body);
     try {
         const { 
                 firstName, 
-                lastName, 
+                lastName,
+                password,
                 address:{
                     postCode,
                     street,
@@ -45,10 +85,12 @@ const createUser = async(req, res) => {
                     resURL
                 }] 
         } = req.body;
-        const newUser = await User.create(
+        const hash = await bcrypt.hash(password, 5);
+        const { _id } = await User.create(
             { 
                 firstName, 
                 lastName, 
+                password: hash,
                 address:{
                     postCode,
                     street,
@@ -60,7 +102,9 @@ const createUser = async(req, res) => {
                 resumes: [{resName, resURL}]
             }
         );
-        res.status(201).json(newUser);
+        console.log("_id", _id);
+        const token = jwt.sign({ _id }, process.env.JWT_SECRET);
+        res.status(201).json({ token });
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -221,6 +265,8 @@ const deleteDocumentofType = async(req, res) => {
 module.exports={
     getAllUsers, 
     getSingleUser,
+    getSingleUserByToken,
+    getSingleUserByEmail, 
     createUser,
     updateUser,
     deleteUser,

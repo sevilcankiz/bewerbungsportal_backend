@@ -1,8 +1,12 @@
 const express = require('express');
+const verifyToken = require('../middlewares/verifyToken.js');
+
 
 const {
     getAllUsers, 
-    getSingleUser, 
+    getSingleUser,
+    getSingleUserByToken,
+    getSingleUserByEmail, 
     createUser, 
     updateUser, 
     deleteUser,
@@ -16,6 +20,9 @@ const {
 const usersRouter = express.Router();
 
 // Users
+usersRouter.route('/me').get(verifyToken, getSingleUserByToken);
+usersRouter.route('/login').post(getSingleUserByEmail);
+
 usersRouter.route('/').get(getAllUsers).post(createUser);
 usersRouter.route('/:id').get(getSingleUser).put(updateUser).delete(deleteUser);
 

@@ -6,6 +6,7 @@ const app = express();
 const db = require('./db');
 const PORT = process.env.PORT || 8080;
 
+
 const applicationsRouter = require('./routes/applications');
 const usersRouter = require('./routes/users');
 const jobsRouter = require('./jobsFetch');
@@ -13,6 +14,9 @@ const jobsRouter = require('./jobsFetch');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
+const applicationsRouter = require('./routes/applications');
+const usersRouter = require('./routes/users');
 
 db();
 
