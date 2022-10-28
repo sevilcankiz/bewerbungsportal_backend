@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-
 // Alle User ausgeben /users GET
 const getAllUsers = async(req, res) => {
     try {
@@ -15,6 +14,7 @@ const getAllUsers = async(req, res) => {
 
 // einen User ausgeben /users/:id GET
 const getSingleUser = async(req, res) => {
+    console.log("jfjfjf");
     try { 
         const { id } = req.params; 
         const user = await User.findById(id);
@@ -111,7 +111,9 @@ const createUser = async(req, res) => {
 };
 
 // einen User komplett updaten /users/:id PUT
-const updateUser = async(req, res) => {               
+const updateUser = async(req, res) => {   
+    console.log("Req Body", req.body);     
+    console.log("req.params", req.params);            
     try { 
         const { id } = req.params;
         const { 
@@ -143,7 +145,7 @@ const updateUser = async(req, res) => {
                 street,
                 city,
                 email,
-                phone: [phone]
+                phone: phone[0]
             },
             certificates: [{cerName, cerURL}],
             resumes: [{resName, resURL}]
@@ -184,22 +186,50 @@ const getAllUserDocumentsofType = async(req, res) => {
 
 // POST /users/:id/:type/ (einen neuen Dokumenttyp hinzufügen) OKAY!!
 const createDocumentofType = async(req, res) => {
+    
     try {
         const { id, type } = req.params;
         type !== 'resumes' && type !== 'certificates' ? res.status(404).send('Not Found') : null;
+        
+        // Check for File
+        if (!req.file) {
+            res.status(400).send(`No file uploaded. `);
+        }
+        console.log("Type", type);
+        console.log(req.file);
+
         if (type === 'resumes') {
-            const { resName, resURL } = req.body;
+
+            // Extract information
+            const { originalname, filename } = req.file;
+            console.log("filename", filename);
+            const resURL = `public/filesdirectory/${filename}`;
+            const resName = originalname;
+
+            // const { resName, resURL } = req.body;
             const user = await User.findById(id);
             user.resumes.push({ resName, resURL });
             await user.save();
-            res.status(200).json(user.resumes);            
+            // res.status(200).json(user.resumes);            
         } else {
-            const { certName, certURL } = req.body;
+
+            // Extract information
+            const { originalname, filename } = req.file;
+            const certURL = `public/filesdirectory/${filename}`;
+            const certName = originalname;
+
+            // const { certName, certURL } = req.body;
             const user = await User.findById(id);
             user.certificates.push({ certName, certURL });
             await user.save();
-            res.status(200).json(user.certificates);           
+            // res.status(200).json(user.certificates);           
         }
+
+        res.writeHead(302, {
+           'Location': `${process.env.NODE_PROJECT_API}/userdata`
+        });
+        res.end();
+
     } catch (error) {
         res.status(500).send(error.message);
     }
