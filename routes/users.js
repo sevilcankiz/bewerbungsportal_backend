@@ -1,6 +1,6 @@
 const express = require('express');
 const verifyToken = require('../middlewares/verifyToken.js');
-
+const upload = require("../middlewares/upload");
 
 const {
     getAllUsers, 
@@ -27,7 +27,7 @@ usersRouter.route('/').get(getAllUsers).post(createUser);
 usersRouter.route('/:id').get(getSingleUser).put(updateUser).delete(deleteUser);
 
 // User-Documents of Type: ( Certificates / Resumes)
-usersRouter.route('/:id/:type').get(getAllUserDocumentsofType).post(createDocumentofType);
+usersRouter.route('/:id/:type').get(getAllUserDocumentsofType).post(upload.single("userfile"), createDocumentofType);  // Multer middleware
 usersRouter.route('/:id/:type/:docId').get(getSingleUserDocumentofType).put(updateDocumentofType).delete(deleteDocumentofType);
 
 module.exports=usersRouter;
