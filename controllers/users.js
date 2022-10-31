@@ -203,7 +203,7 @@ const createDocumentofType = async(req, res) => {
             // Extract information
             const { originalname, filename } = req.file;
             console.log("filename", filename);
-            const resURL = `public/filesdirectory/${filename}`;
+            const resURL = `public/test/${filename}`;
             const resName = originalname;
 
             // const { resName, resURL } = req.body;
@@ -215,7 +215,7 @@ const createDocumentofType = async(req, res) => {
 
             // Extract information
             const { originalname, filename } = req.file;
-            const certURL = `public/filesdirectory/${filename}`;
+            const certURL = `public/test/${filename}`;
             const certName = originalname;
 
             // const { certName, certURL } = req.body;
