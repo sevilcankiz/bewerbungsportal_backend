@@ -39,6 +39,9 @@ jobsRouter.get('/', async (req, res) => {
     if(req.query.zeitarbeit === undefined) {
       req.query.zeitarbeit = 'false';
     }
+    if (req.query.angebotsart === undefined) {
+      req.query.angebotsart = 1;
+    }
     //console.log("Req: ",req.query);
     
     const { data } = await axios.get(process.env.URL_SEARCH_JOBS, {
