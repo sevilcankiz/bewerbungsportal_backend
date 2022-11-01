@@ -14,7 +14,6 @@ const getAllUsers = async(req, res) => {
 
 // einen User ausgeben /users/:id GET
 const getSingleUser = async(req, res) => {
-    console.log("jfjfjf");
     try { 
         const { id } = req.params; 
         const user = await User.findById(id);
@@ -43,8 +42,7 @@ const getSingleUserByToken = async(req, res) => {
 // einen eingeloggten User ausgeben /users/me GET
 const getSingleUserByEmail = async(req, res) => {
     try { 
-        const {address: {email}, password } = req.body
-        //  console.log("email", email);
+        const {address: {email}, password } = req.body;
           
           const found = await User.findOne( { "address.email": email } ).select('+password');
 

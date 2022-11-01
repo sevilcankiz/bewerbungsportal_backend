@@ -3,3 +3,5 @@ node_modules
 userExample.js
 applicationTest.json
 public/filesdirectory
+reqApplications.rest
+request.rest

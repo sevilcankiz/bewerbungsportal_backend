@@ -19,7 +19,7 @@ app.use(express.urlencoded({extended:true}));
 db();
 
 app.get('/', (req, res) => {
-    res.send('server runs on port' + PORT);
+    res.send('server runs on port: ' + PORT);
 });
 
 app.use('/applications', applicationsRouter);
@@ -29,4 +29,4 @@ app.use('/jobsuche', jobsRouter)
 
 
 
-app.listen(PORT, () => console.log('server is listening'));
+app.listen(PORT, () => console.log('server is listening on port: ' + PORT));
