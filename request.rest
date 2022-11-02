@@ -3,7 +3,7 @@ GET http://localhost:8080/users
 ###!SECTION
 
 
-GET http://localhost:8080/users/634f2bdebda1dc6050780bfb
+GET http://localhost:8080/users/634f2e74eb1d278628784f63
 
 
 ###!SECTION
@@ -35,7 +35,7 @@ content-Type: application/json
 ###!SECTION
 
 ###!SECTION
-PUT http://localhost:8080/users/635017c86ef1c4e02a92f367
+PUT http://localhost:8080/users/634f2e74eb1d278628784f63
 content-Type: application/json
 
 {

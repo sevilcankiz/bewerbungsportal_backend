@@ -14,7 +14,6 @@ const getAllUsers = async(req, res) => {
 
 // einen User ausgeben /users/:id GET
 const getSingleUser = async(req, res) => {
-    console.log("jfjfjf");
     try { 
         const { id } = req.params; 
         const user = await User.findById(id);
@@ -43,8 +42,7 @@ const getSingleUserByToken = async(req, res) => {
 // einen eingeloggten User ausgeben /users/me GET
 const getSingleUserByEmail = async(req, res) => {
     try { 
-        const {address: {email}, password } = req.body
-        //  console.log("email", email);
+        const {address: {email}, password } = req.body;
           
           const found = await User.findOne( { "address.email": email } ).select('+password');
 
@@ -75,15 +73,7 @@ const createUser = async(req, res) => {
                     city,
                     email,
                     phone
-                },
-                certificates: [{
-                    certName,
-                    certURL
-                }],
-                resumes: [{ 
-                    resName,
-                    resURL
-                }] 
+                }
         } = req.body;
         const hash = await bcrypt.hash(password, 5);
         const { _id } = await User.create(
@@ -97,9 +87,7 @@ const createUser = async(req, res) => {
                     city,
                     email,
                     phone: phone[0]
-                },
-                certificates: [{certName, certURL}],
-                resumes: [{resName, resURL}]
+                }
             }
         );
         console.log("_id", _id);
@@ -125,15 +113,7 @@ const updateUser = async(req, res) => {
                 city,
                 email,
                 phone
-            },
-            certificates: [{
-                cerName,
-                cerURL
-            }],
-            resumes: [{ 
-                resName,
-                resURL
-            }] 
+            }
     } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
         id,
@@ -146,9 +126,7 @@ const updateUser = async(req, res) => {
                 city,
                 email,
                 phone: phone[0]
-            },
-            certificates: [{cerName, cerURL}],
-            resumes: [{resName, resURL}]
+            }
         }
     );
     const refreshedUser = await User.findById(id);
@@ -203,7 +181,7 @@ const createDocumentofType = async(req, res) => {
             // Extract information
             const { originalname, filename } = req.file;
             console.log("filename", filename);
-            const resURL = `public/filesdirectory/${filename}`;
+            const resURL = `public/test/${filename}`;
             const resName = originalname;
 
             // const { resName, resURL } = req.body;
@@ -215,7 +193,7 @@ const createDocumentofType = async(req, res) => {
 
             // Extract information
             const { originalname, filename } = req.file;
-            const certURL = `public/filesdirectory/${filename}`;
+            const certURL = `public/test/${filename}`;
             const certName = originalname;
 
             // const { certName, certURL } = req.body;
@@ -226,7 +204,7 @@ const createDocumentofType = async(req, res) => {
         }
 
         res.writeHead(302, {
-           'Location': `${process.env.NODE_PROJECT_API}/userdata`
+           'Location': `${process.env.NODE_PROJECT_API}/user`
         });
         res.end();
 
