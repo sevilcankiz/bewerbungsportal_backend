@@ -73,15 +73,7 @@ const createUser = async(req, res) => {
                     city,
                     email,
                     phone
-                },
-                certificates: [{
-                    certName,
-                    certURL
-                }],
-                resumes: [{ 
-                    resName,
-                    resURL
-                }] 
+                }
         } = req.body;
         const hash = await bcrypt.hash(password, 5);
         const { _id } = await User.create(
@@ -95,9 +87,7 @@ const createUser = async(req, res) => {
                     city,
                     email,
                     phone: phone[0]
-                },
-                certificates: [{certName, certURL}],
-                resumes: [{resName, resURL}]
+                }
             }
         );
         console.log("_id", _id);
@@ -123,15 +113,7 @@ const updateUser = async(req, res) => {
                 city,
                 email,
                 phone
-            },
-            certificates: [{
-                cerName,
-                cerURL
-            }],
-            resumes: [{ 
-                resName,
-                resURL
-            }] 
+            }
     } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
         id,
@@ -144,9 +126,7 @@ const updateUser = async(req, res) => {
                 city,
                 email,
                 phone: phone[0]
-            },
-            certificates: [{cerName, cerURL}],
-            resumes: [{resName, resURL}]
+            }
         }
     );
     const refreshedUser = await User.findById(id);
@@ -224,7 +204,7 @@ const createDocumentofType = async(req, res) => {
         }
 
         res.writeHead(302, {
-           'Location': `${process.env.NODE_PROJECT_API}/userdata`
+           'Location': `${process.env.NODE_PROJECT_API}/user`
         });
         res.end();
 
