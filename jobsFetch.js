@@ -13,7 +13,7 @@ const creds = {
 
 const generateToken = async (req, res, next) => {
   try {  
-    console.log("Generating token......");
+    console.log("Generating token ...");
     const {data: {access_token}} = await axios.post(process.env.URL_GET_TOKEN, creds, {
       headers: {
         'User-Agent': 'Jobsuche/2.9.2 (de.arbeitsagentur.jobboerse; build:1077; iOS 15.1.0) Alamofire/5.4.4',
@@ -38,6 +38,9 @@ jobsRouter.get('/', async (req, res) => {
   try { 
     if(req.query.zeitarbeit === undefined) {
       req.query.zeitarbeit = 'false';
+    }
+    if (req.query.angebotsart === undefined) {
+      req.query.angebotsart = 1;
     }
     //console.log("Req: ",req.query);
     
